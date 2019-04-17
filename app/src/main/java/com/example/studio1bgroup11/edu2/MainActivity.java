@@ -12,7 +12,7 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
-
+    //hello there
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
