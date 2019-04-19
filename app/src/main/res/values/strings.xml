@@ -1,6 +1,12 @@
 <resources>
-    <string name="app_name">EDU2</string>
-    <string name="title_home">Dev Home</string>
+
+    <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+
+    <string name="app_name">EDU 2.0</string>
+    <string name="title_activity_profile">Profile</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>
