@@ -4,12 +4,27 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
+import android.view.View;
+
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class HomeActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
+    private ListView search_users_list;
+    ArrayAdapter<String> adapter;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -39,6 +54,67 @@ public class HomeActivity extends AppCompatActivity {
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        search_users_list = (ListView) findViewById(R.id.search_users);
+
+        ArrayList<String> arrayUsers = new ArrayList<>();
+        arrayUsers.addAll(Arrays.asList(getResources().getStringArray(R.array.users)));
+
+        adapter = new ArrayAdapter<String>(
+
+                HomeActivity.this,
+                android.R.layout.simple_list_item_1,
+                arrayUsers
+
+        );
+
+        search_users_list.setAdapter(adapter);
+        search_users_list.setVisibility(View.INVISIBLE);
+        searchUserBoies();
     }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.search_menu,menu);
+        MenuItem item = menu.findItem(R.id.search_users);
+        SearchView searchView = (SearchView) menu.findItem(R.id.search_users).getActionView();
+
+
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                search_users_list.setVisibility(View.INVISIBLE);
+                return false;
+            }
+        });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                search_users_list.setVisibility(View.VISIBLE);
+
+                adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+
+
+        return super.onCreateOptionsMenu(menu);
+
+    }
+
+    public void searchUserBoies(){
+
+
+
+    }
+
 
 }

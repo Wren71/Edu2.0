@@ -9,4 +9,14 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    
+    <string-array name="users">
+        <item>Steve Lim</item>
+        <item>Chinedu Alfaro</item>
+        <item>Gottem City</item>
+        <item>Fotis Espino</item>
+        <item>Kalliope Valeriana</item>
+        <item>Oof oiz</item>
+
+    </string-array>
 </resources>
