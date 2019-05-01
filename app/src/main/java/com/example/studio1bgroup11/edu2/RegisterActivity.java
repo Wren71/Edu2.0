@@ -13,12 +13,24 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
     SQLiteOpenHelper openHelper;
     SQLiteDatabase db;
     Button registerBtn;
     EditText emailEt, usernameEt, passwordEt, password2Et;
+
+    private static final Pattern PASSWORD_PATTERN =
+            Pattern.compile("^" +
+                    "(?=.*[0-9])" +         //at least 1 digit
+                    "(?=.*[a-z])" +         //at least 1 lowercase letter
+                    "(?=.*[A-Z])" +         //at least 1 uppercase letter
+                    //"(?=.*[a-zA-Z])" +    //any letter
+                    //"(?=.*[@#$%^&+=])" +  //at least 1 special character
+                    "(?=\\S+$)" +             //no white spaces
+                    ".{6,}" +               //at least 6 characters
+                    "$");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +54,8 @@ public class RegisterActivity extends AppCompatActivity {
                 String password2 = password2Et.getText().toString();
                 if (!password.matches(password2)) {
                     Toast.makeText(getApplicationContext(), "Passwords do not match", Toast.LENGTH_LONG).show();
+                }else if(!isPassword(password)) {
+                    Toast.makeText(getApplicationContext(), "Password needs at least 6 characters, one upper case letter, one lower case letter and one number", Toast.LENGTH_LONG).show();
                 } else if (!isEmail(email)) {
                     Toast.makeText(getApplicationContext(), "Invalid Email address", Toast.LENGTH_LONG).show();
                 } else {
@@ -112,6 +126,10 @@ public class RegisterActivity extends AppCompatActivity {
 
     boolean isEmail(String email) {
         return (!TextUtils.isEmpty(email)) && Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+
+    boolean isPassword(String password) {
+        return (!TextUtils.isEmpty(password)) && PASSWORD_PATTERN.matcher(password).matches();
     }
 }
 
