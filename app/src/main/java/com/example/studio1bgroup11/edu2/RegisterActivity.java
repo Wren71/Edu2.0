@@ -6,7 +6,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,10 +40,11 @@ public class RegisterActivity extends AppCompatActivity {
                 String username = usernameEt.getText().toString();
                 String password = passwordEt.getText().toString();
                 String password2 = password2Et.getText().toString();
-                if(!password.matches(password2)){
-                    Toast.makeText(getApplicationContext(),"Passwords do not match",Toast.LENGTH_LONG).show();
-                }
-                else{
+                if (!password.matches(password2)) {
+                    Toast.makeText(getApplicationContext(), "Passwords do not match", Toast.LENGTH_LONG).show();
+                } else if (!isEmail(email)) {
+                    Toast.makeText(getApplicationContext(), "Invalid Email address", Toast.LENGTH_LONG).show();
+                } else {
                     insertdata(username, password, email);
                     Toast.makeText(getApplicationContext(), "Successfully Registered!", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
@@ -105,6 +108,10 @@ public class RegisterActivity extends AppCompatActivity {
         if (count != 4)
             return false;
         return true;
+    }
+
+    boolean isEmail(String email) {
+        return (!TextUtils.isEmpty(email)) && Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 }
 
