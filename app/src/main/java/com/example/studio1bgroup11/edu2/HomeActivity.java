@@ -1,5 +1,6 @@
 package com.example.studio1bgroup11.edu2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -10,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -71,6 +73,15 @@ public class HomeActivity extends AppCompatActivity {
         search_users_list.setAdapter(adapter);
         search_users_list.setVisibility(View.INVISIBLE);
         searchUserBoies();
+
+        Button bookingButton = findViewById(R.id.bookingButton);
+        bookingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), BookingActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 
