@@ -7,7 +7,6 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,10 +21,12 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.regex.Pattern;
 
+/*TODO: navigate to register activity*/
+
 public class LoginMainActivity extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth mAuth;
     Button loginBtn, registerBtn;
-    EditText mEmailField, mPasswordField;
+    EditText mUsernameField, mPasswordField;
     TextView registerTv;
 
     private static final String TAG = "EmailPassword";
@@ -33,9 +34,9 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^" +
                     "(?=.*[0-9])" +         //at least 1 digit
-                    "(?=.*[a-z])" +         //at least 1 lowercase letter
-                    "(?=.*[A-Z])" +         //at least 1 uppercase letter
-                    //"(?=.*[a-zA-Z])" +    //any letter
+//                    "(?=.*[a-z])" +         //at least 1 lowercase letter
+//                    "(?=.*[A-Z])" +         //at least 1 uppercase letter
+                    "(?=.*[a-zA-Z])" +    //any letter
                     //"(?=.*[@#$%^&+=])" +  //at least 1 special character
                     "(?=\\S+$)" +             //no white spaces
                     ".{6,}" +               //at least 6 characters
@@ -49,7 +50,7 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
         mAuth = FirebaseAuth.getInstance();
 
         /* Views */
-        mEmailField = findViewById(R.id.usernameEditText);
+        mUsernameField = findViewById(R.id.usernameEditText);
         mPasswordField = findViewById(R.id.passwordEditText);
         loginBtn = findViewById(R.id.loginBtn);
         registerTv = findViewById(R.id.registertextView);
@@ -58,7 +59,9 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
         registerBtn = findViewById(R.id.registerBtn);
         loginBtn.setEnabled(false);
 
-
+        /* Text watchers */
+        mUsernameField.addTextChangedListener(loginTextWatcher);
+        mPasswordField.addTextChangedListener(loginTextWatcher);
     }
 
     @Override
@@ -68,32 +71,7 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
         FirebaseUser currentUser = mAuth.getCurrentUser();
     }
 
-    private void createAccount(String email, String password) {
-        Log.d(TAG, "createAccount:" + email);
-        if (!validateForm()) {
-            return;
-        }
 
-        // [START create_user_with_email]
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "createUserWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            sendEmailVerification();
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(LoginMainActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-
-                    }
-                });
-    }
 
 
     private void signIn(String email, String password) {
@@ -121,39 +99,15 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
                 });
     }
 
-    private void sendEmailVerification() {
-        // Send verification email
-        final FirebaseUser user = mAuth.getCurrentUser();
-        if (user != null) {
-            user.sendEmailVerification()
-                    .addOnCompleteListener(this, new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-
-                            if (task.isSuccessful()) {
-                                Toast.makeText(LoginMainActivity.this,
-                                        "Verification email sent to " + user.getEmail(),
-                                        Toast.LENGTH_SHORT).show();
-                            } else {
-                                Log.e(TAG, "sendEmailVerification", task.getException());
-                                Toast.makeText(LoginMainActivity.this,
-                                        "Failed to send verification email.",
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-        }
-    }
-
     private boolean validateForm() {
         boolean valid = true;
 
-        String email = mEmailField.getText().toString();
-        if (TextUtils.isEmpty(email) && !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            mEmailField.setError("Invalid Email.");
+        String email = mUsernameField.getText().toString();
+        if (TextUtils.isEmpty(email)) {
+            mUsernameField.setError("Invalid Email.");
             valid = false;
         } else {
-            mEmailField.setError(null);
+            mUsernameField.setError(null);
         }
 
         String password = mPasswordField.getText().toString();
@@ -168,11 +122,9 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
     }
 
     public void onClick(View v) {
-        int i = v.getId();
-        if (i == -1/*R.id.emailCreateAccountButton*/) {
-            createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
-        } else if (i == R.id.loginBtn) {
-            signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
+        int i = v.getId();;
+        if (i == R.id.loginBtn) {
+            signIn(mUsernameField.getText().toString(), mPasswordField.getText().toString());
         }
     }
 
@@ -184,7 +136,7 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            String usernameInput = mEmailField.getText().toString().trim();
+            String usernameInput = mUsernameField.getText().toString().trim();
             String passwordInput = mPasswordField.getText().toString().trim();
             loginBtn.setEnabled(!usernameInput.isEmpty() && !passwordInput.isEmpty());
         }

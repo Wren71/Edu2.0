@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -13,13 +14,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
+
 import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
-    SQLiteOpenHelper openHelper;
-    SQLiteDatabase db;
+    private FirebaseAuth mAuth;
     Button registerBtn;
-    EditText emailEt, usernameEt, passwordEt, password2Et;
+    EditText mEmailField, mUsernameField, mPasswordField, mPasswordField2;
 
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^" +
@@ -36,40 +44,21 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        openHelper = new DatabaseHelper(this);
-        emailEt = (EditText) findViewById(R.id.emailEditText);
-        usernameEt = (EditText) findViewById(R.id.usernameEditText);
-        passwordEt = (EditText) findViewById(R.id.passwordEditText);
-        password2Et = (EditText) findViewById(R.id.passwordAgainEditText);
-        registerBtn = (Button) findViewById(R.id.registerBtn);
+        mAuth = FirebaseAuth.getInstance();
+        
+        
+        mEmailField = findViewById(R.id.emailEditText);
+        mUsernameField = findViewById(R.id.usernameEditText);
+        mPasswordField = findViewById(R.id.passwordEditText);
+        mPasswordField2 = findViewById(R.id.passwordAgainEditText);
+        registerBtn = findViewById(R.id.registerBtn);
         registerBtn.setEnabled(false);
 
-        registerBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                db = openHelper.getWritableDatabase();
-                String email = emailEt.getText().toString();
-                String username = usernameEt.getText().toString();
-                String password = passwordEt.getText().toString();
-                String password2 = password2Et.getText().toString();
-                if (!password.matches(password2)) {
-                    Toast.makeText(getApplicationContext(), "Passwords do not match", Toast.LENGTH_LONG).show();
-                }else if(!isPassword(password)) {
-                    Toast.makeText(getApplicationContext(), "Password needs at least 6 characters, one upper case letter, one lower case letter and one number", Toast.LENGTH_LONG).show();
-                } else if (!isEmail(email)) {
-                    Toast.makeText(getApplicationContext(), "Invalid Email address", Toast.LENGTH_LONG).show();
-                } else {
-                    insertdata(username, password, email);
-                    Toast.makeText(getApplicationContext(), "Successfully Registered!", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
-                    startActivity(intent);
-                }
-            }
-        });
-        usernameEt.addTextChangedListener(registerTextWatcher);
-        passwordEt.addTextChangedListener(registerTextWatcher);
-        emailEt.addTextChangedListener(registerTextWatcher);
-        password2Et.addTextChangedListener(registerTextWatcher);
+
+        mUsernameField.addTextChangedListener(registerTextWatcher);
+        mPasswordField.addTextChangedListener(registerTextWatcher);
+        mEmailField.addTextChangedListener(registerTextWatcher);
+        mPasswordField2.addTextChangedListener(registerTextWatcher);
     }
 
     private TextWatcher registerTextWatcher = new TextWatcher() {
@@ -80,11 +69,11 @@ public class RegisterActivity extends AppCompatActivity {
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            String usernameInput = usernameEt.getText().toString().trim();
-            String emailInput = passwordEt.getText().toString().trim();
-            String passwordInput = passwordEt.getText().toString().trim();
-            String password2Input = passwordEt.getText().toString().trim();
-            registerBtn.setEnabled(authenticator());
+            String userNameInput = mUsernameField.getText().toString().trim();
+            String emailInput = mPasswordField.getText().toString().trim();
+            String passwordInput = mPasswordField.getText().toString().trim();
+            String password2Input = mPasswordField.getText().toString().trim();
+            registerBtn.setEnabled(validateForm());
         }
 
         @Override
@@ -93,35 +82,92 @@ public class RegisterActivity extends AppCompatActivity {
         }
     };
 
-    public void insertdata(String username, String password, String email) {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(DatabaseHelper.COL_2, username);
-        contentValues.put(DatabaseHelper.COL_3, password);
-        contentValues.put(DatabaseHelper.COL_4, email);
-        long id = db.insert(DatabaseHelper.TABLE_NAME, null, contentValues);
+    private void createAccount(String email, String password) {
+        if (!validateForm()) {
+            return;
+        }
+
+        // [START create_user_with_email]]
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            String username = mUsernameField.getText().toString();
+                            UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder()
+                                    .setDisplayName(username)
+                                    .build();
+                            sendEmailVerification();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Toast.makeText(RegisterActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
     }
 
-    public boolean authenticator() {
-        int count = 0;
-        String usernameInput = usernameEt.getText().toString().trim();
-        String emailInput = emailEt.getText().toString().trim();
-        String passwordInput = passwordEt.getText().toString().trim();
-        String password2Input = passwordEt.getText().toString().trim();
-        if (!usernameInput.isEmpty()) {
-            count++;
+    private boolean validateForm() {
+        boolean valid = true;
+
+        String userName = mUsernameField.getText().toString();
+        if (TextUtils.isEmpty(userName)) {
+            mUsernameField.setError("Invalid Username.");
+            valid = false;
+        } else {
+            mUsernameField.setError(null);
         }
-        if (!passwordInput.isEmpty()) {
-            count++;
+
+        String email = mEmailField.getText().toString();
+        if(TextUtils.isEmpty(email)) {
+            mEmailField.setError("Invalid Email.");
+            valid = false;
+        } else {
+            mEmailField.setError(null);
         }
-        if (!password2Input.isEmpty()) {
-            count++;
+
+        String password = mPasswordField.getText().toString();
+        if (TextUtils.isEmpty(password) && !PASSWORD_PATTERN.matcher(password).matches()) {
+            mPasswordField.setError("Invalid Password.");
+            valid = false;
+        } else {
+            mPasswordField.setError(null);
         }
-        if (!emailInput.isEmpty()) {
-            count++;
+
+        return valid;
+    }
+
+    private void sendEmailVerification() {
+        // Send verification email
+        final FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null) {
+            user.sendEmailVerification()
+                    .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+
+                            if (task.isSuccessful()) {
+                                Toast.makeText(RegisterActivity.this,
+                                        "Verification email sent to " + user.getEmail(),
+                                        Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(RegisterActivity.this,
+                                        "Failed to send verification email.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
         }
-        if (count != 4)
-            return false;
-        return true;
+    }
+
+    public void onClick(View v) {
+        int i = v.getId();
+        if (i == R.id.registerBtn) {
+            createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
+        }
     }
 
     boolean isEmail(String email) {
