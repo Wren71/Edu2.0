@@ -5,19 +5,18 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.view.View;
 
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,6 +25,9 @@ public class HomeActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
     private ListView search_users_list;
+    private Button signoutBtn;
+
+    private FirebaseAuth mAuth;
     ArrayAdapter<String> adapter;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -52,6 +54,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        mAuth = FirebaseAuth.getInstance();
 
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
@@ -82,6 +85,8 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Button signoutBtn = findViewById(R.id.signoutBtn);
     }
 
 
@@ -125,6 +130,19 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
+    }
+
+    private void signOut() {
+        Intent intent = new Intent(HomeActivity.this, LoginMainActivity.class);
+        FirebaseAuth.getInstance().signOut();
+        startActivity(intent);
+    }
+
+    public void onClick(View v) {
+        int i = v.getId();
+        if (i == R.id.signoutBtn) {
+            signOut();
+        }
     }
 
 
