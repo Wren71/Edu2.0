@@ -1,12 +1,17 @@
 package com.example.studio1bgroup11.edu2;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +25,7 @@ public class LoginMainActivity extends AppCompatActivity {
     Button loginBtn, registerBtn;
     EditText usernameEt, passwordEt;
     TextView registerTv;
+    String userValue;
 
 
 
@@ -27,6 +33,19 @@ public class LoginMainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_login);
+
+        Intent intent = getIntent();
+        String messageTutor = intent.getStringExtra("TutorChoice");
+        String messageCentre = intent.getStringExtra("CentreChoice");
+
+        if(messageTutor != null) {
+            userValue = messageTutor;
+        } else {
+            userValue = messageCentre;
+        }
+
+        System.out.println("RECEIVER LOGIN USER VALUE: " + userValue);
+
         usernameEt = (EditText) findViewById(R.id.usernameEditText);
         passwordEt = (EditText) findViewById(R.id.passwordEditText);
         loginBtn = (Button) findViewById(R.id.loginBtn);
