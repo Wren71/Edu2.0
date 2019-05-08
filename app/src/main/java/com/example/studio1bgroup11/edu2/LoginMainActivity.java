@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
 public class LoginMainActivity extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth mAuth;
     Button loginBtn, registerBtn;
-    EditText mUsernameField, mPasswordField;
+    EditText mEmailField, mPasswordField;
     TextView registerTv;
 
     private static final String TAG = "EmailPassword";
@@ -51,7 +51,7 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
         mAuth = FirebaseAuth.getInstance();
 
         /* Views */
-        mUsernameField = findViewById(R.id.usernameEditText);
+        mEmailField = findViewById(R.id.emailEditText);
         mPasswordField = findViewById(R.id.passwordEditText);
         loginBtn = findViewById(R.id.loginBtn);
         registerTv = findViewById(R.id.registertextView);
@@ -61,7 +61,7 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
         loginBtn.setEnabled(false);
 
         /* Text watchers */
-        mUsernameField.addTextChangedListener(loginTextWatcher);
+        mEmailField.addTextChangedListener(loginTextWatcher);
         mPasswordField.addTextChangedListener(loginTextWatcher);
     }
 
@@ -90,10 +90,12 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            Intent intentLogin = new Intent(LoginMainActivity.this, HomeActivity.class);
+                            startActivity(intentLogin);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(LoginMainActivity.this, "Authentication failed.",
+                            Toast.makeText(LoginMainActivity.this, "Login failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -103,12 +105,12 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
     private boolean validateForm() {
         boolean valid = true;
 
-        String email = mUsernameField.getText().toString();
+        String email = mEmailField.getText().toString();
         if (TextUtils.isEmpty(email)) {
-            mUsernameField.setError("Invalid Email.");
+            mEmailField.setError("Invalid Email.");
             valid = false;
         } else {
-            mUsernameField.setError(null);
+            mEmailField.setError(null);
         }
 
         String password = mPasswordField.getText().toString();
@@ -124,12 +126,12 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
 
     public void onClick(View v) {
         int i = v.getId();
-        Intent intent = new Intent(LoginMainActivity.this, RegisterActivity.class);
+        Intent intentRegister = new Intent(LoginMainActivity.this, RegisterActivity.class);
         if (i == R.id.loginBtn) {
-            signIn(mUsernameField.getText().toString(), mPasswordField.getText().toString());
+            signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
         }
         else if (i == R.id.registerBtn) {
-            startActivity(intent);
+            startActivity(intentRegister);
         }
     }
 
@@ -141,7 +143,7 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            String usernameInput = mUsernameField.getText().toString().trim();
+            String usernameInput = mEmailField.getText().toString().trim();
             String passwordInput = mPasswordField.getText().toString().trim();
             loginBtn.setEnabled(!usernameInput.isEmpty() && !passwordInput.isEmpty());
         }

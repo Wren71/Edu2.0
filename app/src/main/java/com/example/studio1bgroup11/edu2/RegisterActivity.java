@@ -1,15 +1,11 @@
 package com.example.studio1bgroup11.edu2;
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,12 +16,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
     Button registerBtn;
     EditText mEmailField, mUsernameField, mPasswordField, mPasswordField2;
 
@@ -48,7 +47,7 @@ public class RegisterActivity extends AppCompatActivity {
         
         
         mEmailField = findViewById(R.id.emailEditText);
-        mUsernameField = findViewById(R.id.usernameEditText);
+        mUsernameField = findViewById(R.id.emailEditText);
         mPasswordField = findViewById(R.id.passwordEditText);
         mPasswordField2 = findViewById(R.id.passwordAgainEditText);
         registerBtn = findViewById(R.id.registerBtn);
@@ -94,12 +93,18 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            FirebaseUser user = mAuth.getCurrentUser();
+                            Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
+
+                            String email = mEmailField.getText().toString();
                             String username = mUsernameField.getText().toString();
-                            UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder()
-                                    .setDisplayName(username)
-                                    .build();
+
+                            Map<String, Object> dbUser = new HashMap<>();
+                            dbUser.put("email", email);
+                            dbUser.put("displayName", username);
+                            db.collection("users").add(dbUser);
+
                             sendEmailVerification();
+                            startActivity(intent);
                         } else {
                             Toast.makeText(RegisterActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
