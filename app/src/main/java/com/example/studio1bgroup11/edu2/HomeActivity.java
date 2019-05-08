@@ -56,11 +56,11 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         mAuth = FirebaseAuth.getInstance();
 
-        mTextMessage = (TextView) findViewById(R.id.message);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        mTextMessage = findViewById(R.id.message);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        search_users_list = (ListView) findViewById(R.id.search_users);
+        search_users_list = findViewById(R.id.search_users);
 
         ArrayList<String> arrayUsers = new ArrayList<>();
         arrayUsers.addAll(Arrays.asList(getResources().getStringArray(R.array.users)));

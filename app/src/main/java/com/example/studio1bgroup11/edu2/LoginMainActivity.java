@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,7 +29,6 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
     TextView registerTv;
     String userValue;
 
-    private static final String TAG = "EmailPassword";
 
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^" +
@@ -88,7 +86,6 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
 
 
     private void signIn(String email, String password) {
-        Log.d(TAG, "signIn:" + email);
         if (!validateForm()) {
             return;
         }
@@ -99,13 +96,11 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             Intent intentLogin = new Intent(LoginMainActivity.this, HomeActivity.class);
                             startActivity(intentLogin);
                         } else {
                             // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(LoginMainActivity.this, "Login failed.",
                                     Toast.LENGTH_SHORT).show();
                         }

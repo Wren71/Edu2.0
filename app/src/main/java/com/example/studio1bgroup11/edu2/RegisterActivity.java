@@ -2,21 +2,10 @@ package com.example.studio1bgroup11.edu2;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.content.BroadcastReceiver;
-import android.content.ContentValues;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -58,14 +47,12 @@ public class RegisterActivity extends AppCompatActivity {
         
         
         mEmailField = findViewById(R.id.emailEditText);
-        mUsernameField = findViewById(R.id.emailEditText);
         mPasswordField = findViewById(R.id.passwordEditText);
         mPasswordField2 = findViewById(R.id.passwordAgainEditText);
         registerBtn = findViewById(R.id.registerBtn);
         registerBtn.setEnabled(false);
 
 
-        mUsernameField.addTextChangedListener(registerTextWatcher);
         mPasswordField.addTextChangedListener(registerTextWatcher);
         mEmailField.addTextChangedListener(registerTextWatcher);
         mPasswordField2.addTextChangedListener(registerTextWatcher);
@@ -79,10 +66,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            String userNameInput = mUsernameField.getText().toString().trim();
-            String emailInput = mPasswordField.getText().toString().trim();
-            String passwordInput = mPasswordField.getText().toString().trim();
-            String password2Input = mPasswordField.getText().toString().trim();
             registerBtn.setEnabled(validateForm());
         }
 
@@ -107,11 +90,9 @@ public class RegisterActivity extends AppCompatActivity {
                             Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
 
                             String email = mEmailField.getText().toString();
-                            String username = mUsernameField.getText().toString();
 
                             Map<String, Object> dbUser = new HashMap<>();
                             dbUser.put("email", email);
-                            dbUser.put("displayName", username);
                             db.collection("users").add(dbUser);
 
                             sendEmailVerification();
