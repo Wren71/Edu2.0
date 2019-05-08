@@ -1,5 +1,6 @@
 package com.example.studio1bgroup11.edu2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -122,9 +123,13 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
     }
 
     public void onClick(View v) {
-        int i = v.getId();;
+        int i = v.getId();
+        Intent intent = new Intent(LoginMainActivity.this, RegisterActivity.class);
         if (i == R.id.loginBtn) {
             signIn(mUsernameField.getText().toString(), mPasswordField.getText().toString());
+        }
+        else if (i == R.id.registerBtn) {
+            startActivity(intent);
         }
     }
 

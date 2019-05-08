@@ -84,16 +84,16 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void createAccount(String email, String password) {
         if (!validateForm()) {
+            Toast.makeText(RegisterActivity.this, "Failed to register",
+                    Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // [START create_user_with_email]]
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
                             String username = mUsernameField.getText().toString();
                             UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder()
@@ -101,7 +101,6 @@ public class RegisterActivity extends AppCompatActivity {
                                     .build();
                             sendEmailVerification();
                         } else {
-                            // If sign in fails, display a message to the user.
                             Toast.makeText(RegisterActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
@@ -137,6 +136,14 @@ public class RegisterActivity extends AppCompatActivity {
             mPasswordField.setError(null);
         }
 
+        String password2 = mPasswordField2.getText().toString();
+        if (!TextUtils.equals(password, password2)) {
+            mPasswordField.setError("Passwords don't match.");
+            valid = false;
+        } else {
+            mPasswordField.setError(null);
+        }
+
         return valid;
     }
 
@@ -152,7 +159,7 @@ public class RegisterActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 Toast.makeText(RegisterActivity.this,
                                         "Verification email sent to " + user.getEmail(),
-                                        Toast.LENGTH_SHORT).show();
+                                        Toast.LENGTH_LONG).show();
                             } else {
                                 Toast.makeText(RegisterActivity.this,
                                         "Failed to send verification email.",
@@ -168,14 +175,6 @@ public class RegisterActivity extends AppCompatActivity {
         if (i == R.id.registerBtn) {
             createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
         }
-    }
-
-    boolean isEmail(String email) {
-        return (!TextUtils.isEmpty(email)) && Patterns.EMAIL_ADDRESS.matcher(email).matches();
-    }
-
-    boolean isPassword(String password) {
-        return (!TextUtils.isEmpty(password)) && PASSWORD_PATTERN.matcher(password).matches();
     }
 }
 
