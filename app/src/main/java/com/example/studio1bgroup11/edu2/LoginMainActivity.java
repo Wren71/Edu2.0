@@ -1,18 +1,9 @@
 package com.example.studio1bgroup11.edu2;
 
 import android.content.Intent;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -31,7 +22,6 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.regex.Pattern;
 
-/*TODO: navigate to register activity*/
 
 public class LoginMainActivity extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth mAuth;
@@ -80,14 +70,6 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
         }
 
         System.out.println("RECEIVER LOGIN USER VALUE: " + userValue);
-
-        usernameEt = (EditText) findViewById(R.id.usernameEditText);
-        passwordEt = (EditText) findViewById(R.id.passwordEditText);
-        loginBtn = (Button) findViewById(R.id.loginBtn);
-        openHelper = new DatabaseHelper(this);
-        db = openHelper.getReadableDatabase();
-        registerTv = (TextView) findViewById(R.id.registertextView);
-        registerBtn = (Button) findViewById(R.id.registerBtn);
         loginBtn.setEnabled(false);
 
         /* Text watchers */
