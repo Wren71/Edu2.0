@@ -1,6 +1,15 @@
 package com.example.studio1bgroup11.edu2;
 
 import android.content.Intent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -29,6 +38,7 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
     Button loginBtn, registerBtn;
     EditText mEmailField, mPasswordField;
     TextView registerTv;
+    String userValue;
 
     private static final String TAG = "EmailPassword";
 
@@ -58,6 +68,26 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
 
         /* Buttons */
         registerBtn = findViewById(R.id.registerBtn);
+
+        Intent intent = getIntent();
+        String messageTutor = intent.getStringExtra("TutorChoice");
+        String messageCentre = intent.getStringExtra("CentreChoice");
+
+        if(messageTutor != null) {
+            userValue = messageTutor;
+        } else {
+            userValue = messageCentre;
+        }
+
+        System.out.println("RECEIVER LOGIN USER VALUE: " + userValue);
+
+        usernameEt = (EditText) findViewById(R.id.usernameEditText);
+        passwordEt = (EditText) findViewById(R.id.passwordEditText);
+        loginBtn = (Button) findViewById(R.id.loginBtn);
+        openHelper = new DatabaseHelper(this);
+        db = openHelper.getReadableDatabase();
+        registerTv = (TextView) findViewById(R.id.registertextView);
+        registerBtn = (Button) findViewById(R.id.registerBtn);
         loginBtn.setEnabled(false);
 
         /* Text watchers */
@@ -82,7 +112,6 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
         }
 
 
-        // [START sign_in_with_email]
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     public void onComplete(@NonNull Task<AuthResult> task) {
