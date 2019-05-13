@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/blurbackgrround">
+
+    <ImageView
+        android:id="@+id/tvProfile"
+        android:layout_width="125dp"
+        android:layout_height="114dp"
+        tools:layout_editor_absoluteX="35dp"
+        tools:layout_editor_absoluteY="102dp"
+        tools:srcCompat="@tools:sample/avatars[8]"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="186dp"
+        android:layout_height="34dp"
+        android:text="Nick Iacono"
+        android:textSize="24dp"
+        tools:layout_editor_absoluteX="182dp"
+        tools:layout_editor_absoluteY="102dp"
+        android:textColor="#FFF"
+        tools:ignore="MissingConstraints" />
+
+
+    <TextView
+        android:id="@+id/tvDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="User Since 2019"
+        android:textColor="#FFF"
+        tools:layout_editor_absoluteX="182dp"
+        tools:layout_editor_absoluteY="144dp"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/Stars"
+        android:layout_width="114dp"
+        android:layout_height="46dp"
+        android:src="@drawable/fstars"
+        tools:layout_editor_absoluteX="160dp"
+        tools:layout_editor_absoluteY="187dp"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tvLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sydney, NSW"
+        android:textColor="#FFF"
+        tools:layout_editor_absoluteX="182dp"
+        tools:layout_editor_absoluteY="168dp"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/WhiteBackground"
+        android:layout_width="411dp"
+        android:layout_height="440dp"
+        app:srcCompat="@android:drawable/screen_background_light"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="291dp"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tvHeadingQual"
+        android:layout_width="109dp"
+        android:layout_height="25dp"
+        android:text="Qualifications"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="35dp"
+        tools:layout_editor_absoluteY="308dp"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tvQualification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bachelor of Software Engineering, UTS"
+        tools:layout_editor_absoluteX="35dp"
+        tools:layout_editor_absoluteY="344dp"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tvHeadingRegistered"
+        android:layout_width="151dp"
+        android:layout_height="24dp"
+        android:text="Registered Subjects"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="35dp"
+        tools:layout_editor_absoluteY="388dp"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tvRegisteredSubjects"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Maths, English"
+        tools:layout_editor_absoluteX="35dp"
+        tools:layout_editor_absoluteY="421dp"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tvHeadingAvail"
+        android:layout_width="151dp"
+        android:layout_height="24dp"
+        android:text="General Availability"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="35dp"
+        tools:layout_editor_absoluteY="467dp"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tvAvailability"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sat, Sun, Thurs"
+        tools:layout_editor_absoluteX="35dp"
+        tools:layout_editor_absoluteY="504dp"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/bContactTutor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Contact Tutor"
+        tools:layout_editor_absoluteX="136dp"
+        tools:layout_editor_absoluteY="552dp"
+        tools:ignore="MissingConstraints" />
+
+
+</android.support.constraint.ConstraintLayout>
