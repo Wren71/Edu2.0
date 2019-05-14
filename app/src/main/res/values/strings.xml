@@ -9,7 +9,10 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    
+
+    <string name="tutor_choice">Tutor</string>
+    <string name="centre_choice">Centre</string>
+
     <string-array name="users">
         <item>Steve Lim</item>
         <item>Chinedu Alfaro</item>

@@ -6,15 +6,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -27,6 +32,10 @@ public class RegisterActivity extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     Button registerBtn;
     EditText mEmailField, mUsernameField, mPasswordField, mPasswordField2;
+    String userValue;
+
+
+    private static final String TAG = "EmailPassword";
 
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^" +
@@ -44,8 +53,8 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         mAuth = FirebaseAuth.getInstance();
-        
-        
+
+
         mEmailField = findViewById(R.id.emailEditText);
         mUsernameField = findViewById(R.id.emailEditText);
         mPasswordField = findViewById(R.id.passwordEditText);
@@ -58,6 +67,10 @@ public class RegisterActivity extends AppCompatActivity {
         mPasswordField.addTextChangedListener(registerTextWatcher);
         mEmailField.addTextChangedListener(registerTextWatcher);
         mPasswordField2.addTextChangedListener(registerTextWatcher);
+
+        Intent intent = getIntent();
+        userValue = intent.getStringExtra("UserChoice");
+        System.out.println("RECEIVER REGISTER USER VALUE: " + userValue);
     }
 
     private TextWatcher registerTextWatcher = new TextWatcher() {
@@ -106,10 +119,28 @@ public class RegisterActivity extends AppCompatActivity {
                             sendEmailVerification();
                             startActivity(intent);
                         } else {
-                            Toast.makeText(RegisterActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
+                            try {
+                                throw task.getException();
+                            } catch(FirebaseAuthWeakPasswordException e) {
+                                mPasswordField.setError("Weak password");
+                                mPasswordField.requestFocus();
+                            } catch(FirebaseAuthInvalidCredentialsException e) {
+                                mEmailField.setError("Invalid credentials");
+                                mEmailField.requestFocus();
+                            } catch(FirebaseAuthUserCollisionException e) {
+                                mEmailField.setError("User already exists");
+                                mEmailField.requestFocus();
+                            } catch(Exception e) {
+                                Log.e(TAG, e.getMessage());
+                            }
                         }
 
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(RegisterActivity.this, "Authentication failed." + e.getCause(),
+                                Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -143,10 +174,10 @@ public class RegisterActivity extends AppCompatActivity {
 
         String password2 = mPasswordField2.getText().toString();
         if (!TextUtils.equals(password, password2)) {
-            mPasswordField.setError("Passwords don't match.");
+            mPasswordField2.setError("Passwords don't match.");
             valid = false;
         } else {
-            mPasswordField.setError(null);
+            mPasswordField2.setError(null);
         }
 
         return valid;

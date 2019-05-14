@@ -20,6 +20,13 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import android.content.Context;
+import android.content.IntentFilter;
+import android.util.Log;
+
+
+
+
 import java.util.regex.Pattern;
 
 /*TODO: navigate to register activity*/
@@ -29,6 +36,8 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
     Button loginBtn, registerBtn;
     EditText mEmailField, mPasswordField;
     TextView registerTv;
+    String userValue;
+
 
     private static final String TAG = "EmailPassword";
 
@@ -63,6 +72,19 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
         /* Text watchers */
         mEmailField.addTextChangedListener(loginTextWatcher);
         mPasswordField.addTextChangedListener(loginTextWatcher);
+
+        Intent intent = getIntent();
+        String messageTutor = intent.getStringExtra("TutorChoice");
+        String messageCentre = intent.getStringExtra("CentreChoice");
+
+        if(messageTutor != null) {
+            userValue = messageTutor;
+        } else {
+            userValue = messageCentre;
+        }
+
+        System.out.println("RECEIVER LOGIN USER VALUE: " + userValue);
+
     }
 
     @Override
@@ -127,6 +149,7 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
     public void onClick(View v) {
         int i = v.getId();
         Intent intentRegister = new Intent(LoginMainActivity.this, RegisterActivity.class);
+        intentRegister.putExtra("UserChoice", userValue);
         if (i == R.id.loginBtn) {
             signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
         }
