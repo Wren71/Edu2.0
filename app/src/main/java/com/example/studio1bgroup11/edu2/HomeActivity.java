@@ -1,6 +1,8 @@
 package com.example.studio1bgroup11.edu2;
 
+import android.app.ActionBar;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -37,13 +39,15 @@ public class HomeActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
+
                     return true;
                 case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
+                    Intent intent2 = new Intent(HomeActivity.this, HistoryActivity.class);
+                    startActivity(intent2);
                     return true;
                 case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
+                    Intent intent3 = new Intent(HomeActivity.this, ProfileActivity.class);
+                    startActivity(intent3);
                     return true;
             }
             return false;
@@ -87,6 +91,10 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         Button signoutBtn = findViewById(R.id.signoutBtn);
+
+        search_users_list.setBackgroundColor(Color.WHITE);
+
+
     }
 
 
@@ -125,6 +133,7 @@ public class HomeActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
 
     }
+
 
     public void searchUserBoies(){
 

@@ -13,6 +13,8 @@
     <string name="tutor_choice">Tutor</string>
     <string name="centre_choice">Centre</string>
 
+    <string name="pick_user">Please choose your type of user below!</string>
+
     <string-array name="users">
         <item>Steve Lim</item>
         <item>Chinedu Alfaro</item>

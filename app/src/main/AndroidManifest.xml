@@ -9,27 +9,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity android:name=".HistoryActivity"  android:label="History" android:parentActivityName=".HomeActivity"></activity>
+        <activity android:name=".ProfileActivity" android:label="Profile" android:parentActivityName=".HomeActivity" />
 
         <activity android:name=".UserChoice">
-
             <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
                 <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <activity
             android:name=".LoginMainActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name" android:parentActivityName=".UserChoice"/>
+        <activity android:name=".RegisterActivity" android:parentActivityName=".LoginMainActivity" />
 
-        </activity>
+        <activity android:name=".HomeActivity" ></activity>
 
 
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".HomeActivity" />
-        <activity android:name=".BookingActivity" />
+
+
+        <activity android:name=".BookingActivity" android:parentActivityName=".HomeActivity" />
     </application>
 
 </manifest>
