@@ -114,6 +114,16 @@ public class RegisterActivity extends AppCompatActivity {
                             Map<String, Object> dbUser = new HashMap<>();
                             dbUser.put("email", email);
                             dbUser.put("displayName", username);
+
+                            System.out.println("YEET USER VALUE REGISTER: " + userValue);
+
+                            if(userValue.equals("Tutor")) {
+                                dbUser.put("userType", "Tutor");
+                            }
+                            else {
+                                dbUser.put("userType", "Centre");
+                            }
+
                             db.collection("users").add(dbUser);
 
                             sendEmailVerification();
