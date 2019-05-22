@@ -41,11 +41,11 @@ public class HomeActivity extends AppCompatActivity {
                 case R.id.navigation_home:
 
                     return true;
-                case R.id.navigation_dashboard:
+                case R.id.navigation_history:
                     Intent intent2 = new Intent(HomeActivity.this, HistoryActivity.class);
                     startActivity(intent2);
                     return true;
-                case R.id.navigation_notifications:
+                case R.id.navigation_profile:
                     Intent intent3 = new Intent(HomeActivity.this, ProfileActivity.class);
                     startActivity(intent3);
                     return true;

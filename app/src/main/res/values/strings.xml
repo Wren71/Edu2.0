@@ -1,8 +1,8 @@
 <resources>
 
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_history">Booking History</string>
+    <string name="title_profile">Profile</string>
 
     <string name="app_name">EDU 2.0</string>
     <string name="title_activity_profile">Profile</string>
@@ -26,4 +26,15 @@
         <item>Oof oiz</item>
 
     </string-array>
+
+    <string-array name="history">
+    <item>Steve Lim - Date booked: 23/05/19</item>
+    <item>Chinedu Alfaro - Date booked: 22/05/19</item>
+    <item>Gottem City - Date booked: 21/05/19</item>
+    <item>Fotis Espino - Date booked: 20/05/19</item>
+    <item>Kalliope Valeriana - Date booked: 19/05/19</item>
+    <item>Kalliope Valeriana - Date booked: 18/05/19</item>
+    </string-array>
+
+
 </resources>
