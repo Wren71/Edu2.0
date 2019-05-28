@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -32,6 +33,7 @@ public class RegisterActivity extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     Button registerBtn;
     EditText mEmailField, mUsernameField, mPasswordField, mPasswordField2;
+    TextView userType;
     String userValue;
 
 
@@ -61,6 +63,7 @@ public class RegisterActivity extends AppCompatActivity {
         mPasswordField2 = findViewById(R.id.passwordAgainEditText);
         registerBtn = findViewById(R.id.registerBtn);
         registerBtn.setEnabled(false);
+        userType = findViewById(R.id.userText2);
 
 
         mUsernameField.addTextChangedListener(registerTextWatcher);
@@ -71,6 +74,8 @@ public class RegisterActivity extends AppCompatActivity {
         Intent intent = getIntent();
         userValue = intent.getStringExtra("UserChoice");
         System.out.println("RECEIVER REGISTER USER VALUE: " + userValue);
+
+        userType.setText(userValue);
     }
 
     private TextWatcher registerTextWatcher = new TextWatcher() {

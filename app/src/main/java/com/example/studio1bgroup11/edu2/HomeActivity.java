@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -20,6 +21,7 @@ import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -66,7 +68,7 @@ public class HomeActivity extends AppCompatActivity {
 
         search_users_list = (ListView) findViewById(R.id.search_users);
 
-        ArrayList<String> arrayUsers = new ArrayList<>();
+        final ArrayList<String> arrayUsers = new ArrayList<>();
         arrayUsers.addAll(Arrays.asList(getResources().getStringArray(R.array.users)));
 
         adapter = new ArrayAdapter<String>(
@@ -79,6 +81,8 @@ public class HomeActivity extends AppCompatActivity {
 
         search_users_list.setAdapter(adapter);
         search_users_list.setVisibility(View.INVISIBLE);
+        search_users_list.setClickable(true);
+
         searchUserBoies();
 
         Button bookingButton = findViewById(R.id.bookingButton);
@@ -93,6 +97,16 @@ public class HomeActivity extends AppCompatActivity {
         Button signoutBtn = findViewById(R.id.signoutBtn);
 
         search_users_list.setBackgroundColor(Color.WHITE);
+
+        search_users_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(view.getContext(), ProfileActivity.class);
+                intent.putExtra("Name", parent.getAdapter().getItem(position).toString());
+                startActivity(intent);
+            }
+        });
 
 
     }
@@ -123,7 +137,6 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 search_users_list.setVisibility(View.VISIBLE);
-
                 adapter.getFilter().filter(newText);
                 return false;
             }

@@ -36,6 +36,12 @@ public class HistoryActivity extends AppCompatActivity {
         );
 
 
+        //instantiate custom adapter
+        BookingHistoryAdapter adapter = new BookingHistoryAdapter(arrayHistory, this);
+
+        //handle listview and assign adapter
         history_list.setAdapter(adapter);
+
+
     }
 }

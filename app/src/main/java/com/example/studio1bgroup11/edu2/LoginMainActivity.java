@@ -35,7 +35,7 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
     private FirebaseAuth mAuth;
     Button loginBtn, registerBtn;
     EditText mEmailField, mPasswordField;
-    TextView registerTv;
+    TextView registerTv, userType;
     String userValue;
 
 
@@ -64,6 +64,7 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
         mPasswordField = findViewById(R.id.passwordEditText);
         loginBtn = findViewById(R.id.loginBtn);
         registerTv = findViewById(R.id.registertextView);
+        userType = findViewById(R.id.userText1);
 
         /* Buttons */
         registerBtn = findViewById(R.id.registerBtn);
@@ -84,6 +85,9 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
         }
 
         System.out.println("RECEIVER LOGIN USER VALUE: " + userValue);
+
+        userType.setText(userValue);
+
 
     }
 
