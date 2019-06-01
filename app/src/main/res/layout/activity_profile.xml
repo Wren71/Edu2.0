@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/blurbackgrround">
+    android:background="@drawable/logoglowhue1">
 
     <ImageView
         android:id="@+id/tvProfile"
@@ -19,8 +19,8 @@
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout"
-        android:layout_width="210dp"
-        android:layout_height="205dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
@@ -32,8 +32,8 @@
 
         <TextView
             android:id="@+id/tvName"
-            android:layout_width="186dp"
-            android:layout_height="34dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="88dp"
             android:layout_marginEnd="16dp"
@@ -41,7 +41,7 @@
             android:textColor="#FFF"
             android:textSize="24dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.845"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -60,18 +60,6 @@
             app:layout_constraintTop_toBottomOf="@+id/tvName"
             tools:ignore="MissingConstraints" />
 
-        <ImageView
-            android:id="@+id/Stars"
-            android:layout_width="114dp"
-            android:layout_height="46dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:src="@drawable/fstars"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvLocation" />
-
         <TextView
             android:id="@+id/tvLocation"
             android:layout_width="wrap_content"
@@ -89,36 +77,21 @@
 
     </android.support.constraint.ConstraintLayout>
 
-    <ImageView
-        android:id="@+id/WhiteBackground"
-        android:layout_width="372dp"
-        android:layout_height="411dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="284dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.478"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/screen_background_light"
-        tools:ignore="MissingConstraints" />
-
     <TextView
         android:id="@+id/tvHeadingQual"
-        android:layout_width="109dp"
-        android:layout_height="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="52dp"
         android:layout_marginEnd="8dp"
         android:text="Qualifications"
         android:textSize="16dp"
         android:textStyle="bold"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.094"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/WhiteBackground"
+        app:layout_constraintTop_toBottomOf="@+id/tvProfile"
         tools:ignore="MissingConstraints" />
 
     <TextView
@@ -136,8 +109,8 @@
 
     <TextView
         android:id="@+id/tvHeadingRegistered"
-        android:layout_width="151dp"
-        android:layout_height="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -165,8 +138,8 @@
 
     <TextView
         android:id="@+id/tvHeadingAvail"
-        android:layout_width="151dp"
-        android:layout_height="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -190,23 +163,6 @@
         app:layout_constraintHorizontal_bias="0.089"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvHeadingAvail"
-        tools:ignore="MissingConstraints" />
-
-    <Button
-        android:id="@+id/bContactTutor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Contact Tutor"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/WhiteBackground"
-        app:layout_constraintHorizontal_bias="0.474"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAvailability"
-        app:layout_constraintVertical_bias="0.188"
         tools:ignore="MissingConstraints" />
 
 

@@ -63,7 +63,7 @@ public class RegisterActivity extends AppCompatActivity {
         mPasswordField2 = findViewById(R.id.passwordAgainEditText);
         registerBtn = findViewById(R.id.registerBtn);
         registerBtn.setEnabled(false);
-        userType = findViewById(R.id.userText2);
+    //    userType = findViewById(R.id.userText2);
 
 
         mUsernameField.addTextChangedListener(registerTextWatcher);
@@ -75,7 +75,7 @@ public class RegisterActivity extends AppCompatActivity {
         userValue = intent.getStringExtra("UserChoice");
         System.out.println("RECEIVER REGISTER USER VALUE: " + userValue);
 
-        userType.setText(userValue);
+     //   userType.setText(userValue);
     }
 
     private TextWatcher registerTextWatcher = new TextWatcher() {

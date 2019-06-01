@@ -60,14 +60,14 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
         mAuth = FirebaseAuth.getInstance();
 
         /* Views */
-        mEmailField = findViewById(R.id.emailEditText);
-        mPasswordField = findViewById(R.id.passwordEditText);
+        mEmailField = findViewById(R.id.emailEditText2);
+        mPasswordField = findViewById(R.id.passwordEditText2);
         loginBtn = findViewById(R.id.loginBtn);
         registerTv = findViewById(R.id.registertextView);
-        userType = findViewById(R.id.userText1);
+       // userType = findViewById(R.id.userText1);
 
         /* Buttons */
-        registerBtn = findViewById(R.id.registerBtn);
+        registerBtn = findViewById(R.id.registerBtnLogin);
         loginBtn.setEnabled(false);
 
         /* Text watchers */
@@ -86,7 +86,7 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
 
         System.out.println("RECEIVER LOGIN USER VALUE: " + userValue);
 
-        userType.setText(userValue);
+       // userType.setText(userValue);
 
 
     }
@@ -157,7 +157,7 @@ public class LoginMainActivity extends AppCompatActivity implements View.OnClick
         if (i == R.id.loginBtn) {
             signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
         }
-        else if (i == R.id.registerBtn) {
+        else if (i == R.id.registerBtnLogin) {
             startActivity(intentRegister);
         }
     }
