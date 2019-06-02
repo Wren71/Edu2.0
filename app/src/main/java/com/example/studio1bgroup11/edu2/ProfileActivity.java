@@ -10,7 +10,7 @@ import java.util.Arrays;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    TextView qualification, subjects, name, avail;
+    TextView qualification, subjects, name, avail, availHeading, subjectHeading;
     String nameFromSearch;
 
     @Override
@@ -22,8 +22,12 @@ public class ProfileActivity extends AppCompatActivity {
         subjects = findViewById(R.id.tvRegisteredSubjects);
         name = findViewById(R.id.tvName);
         avail = findViewById(R.id.tvAvailability);
+        availHeading = findViewById(R.id.tvHeadingAvail);
+        subjectHeading = findViewById(R.id.tvHeadingRegistered);
 
-        nameFromSearch = "Nick Iacono";
+
+
+        nameFromSearch = "Mount Carmel High School";
 
 
 
@@ -39,6 +43,9 @@ if (nameFromSearch != null ) {
         subjects.setText("Maths and Java programming");
         name.setText("Steve Lim");
         avail.setText("Sunday, Wednesday, Friday");
+        availHeading.setText("Availability");
+        subjectHeading.setText("Subjects");
+
 
     } else if (nameFromSearch.equals("Chinedu Alfaro")) {
 
@@ -46,6 +53,9 @@ if (nameFromSearch != null ) {
         subjects.setText("Chemistry and Science");
         name.setText("Chinedu Alfaro");
         avail.setText("Monday, Thursday, Saturday");
+        availHeading.setText("Availability");
+        subjectHeading.setText("Subjects");
+
 
 
     } else if (nameFromSearch.equals("Gottem City")) {
@@ -53,6 +63,8 @@ if (nameFromSearch != null ) {
         subjects.setText("Physics and Maths");
         name.setText("Gottem City");
         avail.setText("Monday, Saturday, Sunday");
+        availHeading.setText("Availability");
+        subjectHeading.setText("Subjects");
 
 
     } else if (nameFromSearch.equals("Fotis Espino")) {
@@ -60,6 +72,8 @@ if (nameFromSearch != null ) {
         subjects.setText("Chemistry and Science");
         name.setText("Fotis Espoino");
         avail.setText("Monday, Thursday, Saturday");
+        availHeading.setText("Availability");
+        subjectHeading.setText("Subjects");
 
 
     } else if (nameFromSearch.equals("Kalliope Valeriana")) {
@@ -67,17 +81,70 @@ if (nameFromSearch != null ) {
         subjects.setText("Database programming and Maths");
         name.setText("Kalliope Valeriana");
         avail.setText("Monday, Thursday, Sunday");
+        availHeading.setText("Availability");
+        subjectHeading.setText("Subjects");
 
 
-    } else if (nameFromSearch.equals("Oof oiz")) {
-        qualification.setText("Bachelor of Science UTS");
-        subjects.setText("App programming and Real Time Operating Systems");
-        name.setText("Ooof oiz");
-        avail.setText("Sunday, Monday, Tuesday");
+    } else if (nameFromSearch.equals("Jennie")) {
+        qualification.setText("Masters of IT UTS");
+        subjects.setText("Maths and Music");
+        name.setText("Jennie");
+        avail.setText("Sunday, Tuesday, Wednesday");
+        availHeading.setText("Availability");
+        subjectHeading.setText("Subjects");
+
+
+    } else if (nameFromSearch.equals("Wren")) {
+        qualification.setText("Bachelor of Engineering Software UTS");
+        subjects.setText("Maths and Science oof");
+        name.setText("Wren");
+        avail.setText("Saturday, Sunday");
+        availHeading.setText("Availability");
+        subjectHeading.setText("Subjects");
+
+
+    } else if (nameFromSearch.equals("Lachlan")) {
+        qualification.setText("Bachelor of Engineering Software UTS");
+        subjects.setText("History and Firebase");
+        name.setText("Lachlan");
+        avail.setText("Monday, Tuesday");
+        availHeading.setText("Availability");
+        subjectHeading.setText("Subjects");
+
+
+    } else if (nameFromSearch.equals("Jerry")) {
+        qualification.setText("Bachelor of Business UTS");
+        subjects.setText("History and Science");
+        name.setText("Jerry");
+        avail.setText("Thursday, Friday");
+        availHeading.setText("Availability");
+        subjectHeading.setText("Subjects");
 
 
     }
 
+    else if (nameFromSearch.equals("Lisa")) {
+        qualification.setText("Bachelor of Science UTS");
+        subjects.setText("Music and Science");
+        name.setText("Lisa");
+        avail.setText("Thursday, Friday");
+        availHeading.setText("Availability");
+        subjectHeading.setText("Subjects");
+
+
+    }
+
+
+    else if (nameFromSearch.equals("Abcde")) {
+        qualification.setText("Bachelor of Business UTS");
+        subjects.setText("History and Science");
+        name.setText("Abcde");
+        avail.setText("Thursday, Friday");
+        availHeading.setText("Availability");
+        subjectHeading.setText("Subjects");
+
+
+    }
 
 }
 

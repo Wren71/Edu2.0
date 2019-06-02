@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.view.View;
+import android.widget.Toast;
 
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -67,6 +68,7 @@ public class HomeActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         search_users_list = (ListView) findViewById(R.id.search_users);
+        signoutBtn = (Button)  findViewById(R.id.signoutBtn);
 
         final ArrayList<String> arrayUsers = new ArrayList<>();
         arrayUsers.addAll(Arrays.asList(getResources().getStringArray(R.array.users)));
@@ -107,6 +109,19 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        signoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, LoginMainActivity.class);
+                FirebaseAuth.getInstance().signOut();
+                startActivity(intent);
+                Toast.makeText(HomeActivity.this, "Successfully signed out!",
+                        Toast.LENGTH_LONG).show();
+            }
+        });
+
+
 
 
     }

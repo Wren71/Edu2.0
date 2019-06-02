@@ -66,7 +66,7 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
                     Toast.makeText(v.getContext(), "Fields cannot be empty", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    Toast.makeText(v.getContext(), "Booking Created", Toast.LENGTH_LONG).show();
+                    Toast.makeText(v.getContext(), "Booking Created with : " + currentTutor + ", " + currentSubject + ", " + currentDuration + "h", Toast.LENGTH_LONG).show();
 
                     Map<String, Object> dbBookings = new HashMap<>();
 
@@ -79,6 +79,8 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
                     dbBookings.put("date", dbTime);
 
                     db.collection("bookings").add(dbBookings);
+
+
 
                     //finish();
                 }
@@ -130,7 +132,7 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
 
         //temp for now - fill with static data
         //tutorsList = new ArrayList<String>(Arrays.asList("Jimmy", "Swarley", "Greg", "Molly", "Brock", "Oak", "Midoriya", "Hilter"));
-        subjectList = new ArrayList<String>(Arrays.asList("Maths", "English", "Science", "German Revolution"));
+        subjectList = new ArrayList<String>(Arrays.asList("Maths", "English", "Science", "History"));
 
         //add hints to the front of list
         tutorsList.add(0, "Choose Tutor");
